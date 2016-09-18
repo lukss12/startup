@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sign Up!</title>
+  </head>
+  <body>
+    <h1>Sign Up</h1>
+    <form id="sign-up-form" action="post_form.php" method="post">
+      <table id="form-table">
+        <tr>
+          <td>
+            First name:*
+          </td>
+          <td>
+          <input type="text" id="firstname-input">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Last name:*
+          </td>
+          <td>
+            <input type="text" id="lastname-input">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Birthday:* <!--Can't use type="date" because poor compability with Firefox and IE-->
+          </td>
+          <td>
+             Month:
+             <input type="number" id="bday-month-input" min="1" max="12" value="1">  
+             Day:
+             <input type="number" id="bday-day-input" min="1" max="31" value="1">  
+             Year:
+             <input type="number" id="bday-year-input" min="1880" max="2016" value="1880">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Email:*
+          </td>
+          <td>
+            <input type="email" id="email-input">
+            (Needs to be a valid email)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Favourite Sport:*
+          </td>
+          <td>
+            <select id="sport">
+              <option value="soccer">Soccer</option>
+              <option value="rugby">Rugby</option>
+              <option value="tennis">Tennis</option>
+              <option value="other">otro</option>
+            </select> 
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            Write some about yourself:
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <textarea id="bio-text" rows="4" cols="50"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <input type="submit" id="submint-button" value="Submit">
+            <input type="reset" id="reset-button" value="Reset">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+          <p>*Required information.</p>
+          </td>
+        </tr>
+      </table>  
+    </form> 
+  </body>
+</html>
