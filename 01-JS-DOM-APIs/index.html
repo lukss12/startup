@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=YES">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/vendor/jquery.js"></script>
+    <title>JS BootCamp</title>
+  </head>
+  <body>
+    <section id="main-section" class="hidden">
+      "Hello world"
+    </section>
+    <button id="joke-button" type="button">Joke</button><br>
+    <label>Artist Name:<input id="artist-text" type="text"> </label>
+    <button id="search-albums-button" type="button">Search Albums</button>
+    <div id="albums-container">
+    </div>
+    <script>
+      $("#search-albums-button").click(function(){ 
+          $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "https://api.spotify.com/v1/search?query="+ $("#artist-text").val() + "&type=album",
+            async: true,
+            }).done(function(data){
+              $("#main-section").text("AjaxDone");
+              //Add header of Album List
+              $("#albums-container").empty();
+              $("#albums-container").append($("#artist-text").val() + ":\n"); 
+              $.each(data.albums.items, function(i, item) {
+
+                //new article
+                var newArticle = document.createElement("article");
+                newArticle.setAttribute("id", "newArticle");
+                $("#albums-container").append(newArticle);
+                var articleTitle = document.createElement("H2");
+                articleTitle.appendChild(document.createTextNode(data.albums.items[i].name));
+                newArticle.appendChild(articleTitle);
+                var albumType = document.createElement("P").appendChild(document.createTextNode("Type: " + data.albums.items[i].type)); 
+                newArticle.appendChild(albumType);
+                newArticle.appendChild(document.createElement("br"));
+
+                //get release date
+                $.ajax({
+                  type: "GET",
+                  dataType: "json",
+                  url: data.albums.items[i].href,
+                  async: false,
+                  }).done(function(album){
+                      var releaseDate = document.createElement("P").appendChild(document.createTextNode("Release Date: " + album.release_date)); 
+                      newArticle.appendChild(releaseDate);
+                      newArticle.appendChild(document.createElement("br"));
+                  });
+
+                //album's image
+                var newImage= document.createElement("img");
+                newImage.setAttribute("src", data.albums.items[i].images[0].url);
+                newImage.setAttribute("width", 240);
+                newImage.setAttribute("height", 240);
+                newArticle.appendChild(newImage);
+                newArticle.appendChild(document.createElement("br"));
+                
+                //spotify' external s link
+                var spotifyLink = document.createElement("a")
+                spotifyLink.appendChild(document.createTextNode("See on Spotify!" ));
+                spotifyLink.setAttribute("title", data.albums.items[i].name);
+                spotifyLink.setAttribute("href", data.albums.items[i].external_urls.spotify);
+                newArticle.appendChild(spotifyLink);
+              });
+              $(".albums").append("\n");  
+          }).fail(function(data) {
+              $("#main-section").text("AjaxFail");
+              $("#main-section").css('color', 'red');
+          });
+        });
+
+      $("#joke-button").click(function(){
+          var ajaxRequest = $.ajax({
+                                type: "GET",
+                                dataType: "jsonp",
+                                url: "http://api.icndb.com/jokes/random"
+                              })
+                            .done(function(data) {
+                              $("#main-section").css('color', 'black');
+                              highlight(data.value.joke,$("#main-section"));
+                            })
+                            .fail(function(data) {
+                              $("#main-section").text("AjaxFail");
+                              $("#main-section").css('color', 'red');
+                            });
+        });
+
+      function highlight(text,input)
+      {   
+        input.text("");
+        input.append(text.replace(/Chuck Norris/,'<span class="highlight">Chuk Norris</span>'));
+      }
+
+      $(window).on('load',function() {
+        $("#main-section").fadeIn(1000,function(){
+          var textBox = '<label>Text:<textarea id="my-text-box" class="alias" rows=4 cols=50></textarea></label>';
+          $("#joke-button").after(textBox);
+          $("#my-text-box").focus(); 
+        });
+      });
+   </script>
+  </body>
+</html>
