@@ -4,7 +4,9 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <h1><p>Sign Up</p></h1>
+    <header>
+      <h1><p>Sign Up</p></h1>
+    </header>
     <form id="sign-up-form" action="post_form.php" method="post">
       <table id="form-table">
         <tr>
@@ -12,7 +14,7 @@
             First name:*
           </td>
           <td>
-          <input type="text" id="firstname-input">
+          <input type="text" id="firstname-input" required>
           </td>
         </tr>
         <tr>
@@ -20,7 +22,7 @@
             Last name:*
           </td>
           <td>
-            <input type="text" id="lastname-input">
+            <input type="text" id="lastname-input" required>
           </td>
         </tr>
         <tr>
@@ -29,11 +31,11 @@
           </td>
           <td>
             Month:
-            <input type="number" id="bday-month-input" min="1" max="12" value="1">  
+            <input type="number" id="bday-month-input" min="1" max="12" value="1" required>  
             Day:
-            <input type="number" id="bday-day-input" min="1" max="31" value="1"> 
+            <input type="number" id="bday-day-input" min="1" max="31" value="1" required> 
             Year: 
-            <input type="number" id="bday-year-input" min="1880" max="2016" value="1880">
+            <input type="number" id="bday-year-input" min="1880" max="2016" value="1880" required>
           </td>
         </tr>
         <tr>
@@ -41,8 +43,7 @@
             Email:*
           </td>
           <td>
-            <input type="email" id="email-input">
-            (Needs to be a valid email)
+            <input type="email" id="email-input" required placeholder="Needs to be a valid email">
           </td>
         </tr>
         <tr>
@@ -50,7 +51,7 @@
             Favourite Sport:*
           </td>
           <td>
-            <select id="sport">
+            <select id="sport" required>
               <option value="soccer">Soccer</option>
               <option value="rugby">Rugby</option>
               <option value="tennis">Tennis</option>
